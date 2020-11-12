@@ -1,0 +1,8 @@
+function ShowIron() {
+  return "Hello!"
+}
+function main() {
+  print("This is an Test of Iron-7")
+  print("-------------------------")
+  print(ShowIron())
+}
