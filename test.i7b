@@ -1,0 +1,43 @@
+_Data:
+    Jump        _Begin
+    Data        main_SecretString0, string,         "This is an Test of Iron-7"
+    Data        main_SecretString1, string,         "-------------------------"
+    Data        ShowIron_SecretString0, string,     "Hello!"
+    Data        _Error_SecretString0, string,       "Couldn't begin the Stack"
+_Begin:
+    Call        StackBegin
+    Jump        main
+_StackBegin
+    StackReserve 5
+    Compare R0, 0
+    JumpNotEqual _Error
+    Return
+_Error:
+    GetAddress _Error_SecretString0, R0
+    SetValue 4,                      R1
+    SystemRequest 10
+    Jump Quit
+_Quit:
+    SetValue 1,                     R0 
+    SystemRequest 2
+    StackRecycle
+    SystemExit
+print:
+    SetValue    #1,                 R0
+    SetValue    4,                  R1
+    SystemRequest 10
+    Return
+fn_ShowIron:
+    StringNew   #2
+    StringLoad  ShowIron_SecretString
+    Return
+main:
+    StringNew   #1
+    StringLoad  #1,                 main_SecretString0
+    Call        print
+    StringNew   #1
+    StringLoad  #1,                 main_SecretString1
+    Call        print
+    SetValue    #2,                 #1
+    Call        print
+    Jump        _Quit
